@@ -1,35 +1,20 @@
 pipeline {
-
-  agent any
-  environment {
-    //adding a comment for the commit test
-    DEPLOY_CREDS = credentials('anypointPlatform')
-    MULE_VERSION = '4.4.0'
-    BG = "Dev"
-    WORKER = "Micro"
-    M2SETTINGS = "C:\\Users\\Administrator\\.m2\\settings.xml"
-  }
-  stages {
-    stage('Build') {
-      steps {
-            bat 'mvn -B -U -e -V clean -gs %M2SETTINGS% -DskipTests package'
-      }
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                bat 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+        stage('Deploy') {
+				steps {
+					bat 'mvn deploy -DmuleDeploy -Denv=Dev -DconnectedApp.clientId=efef7b08ade74b0b8ebe3745334bea18 -DconnectedApp.clientSecret=3e8C23625CEA407cAa6b529a08312Aa9 -DconnectedApp.grantType=client_credentials'
+				}
+					}
     }
-
-    stage('Test') {
-      steps {
-          bat "mvn test"
-      }
-    }
-
-     stage('Deploy Development') {
-      environment {
-        ENVIRONMENT = 'Sandbox'
-        APP_NAME = 'sandbox-pipeline-demo'
-      }
-      steps {
-            bat 'mvn -U -V -e -B -gs %M2SETTINGS% -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username="%DEPLOY_CREDS_USR%" -Danypoint.password="%DEPLOY_CREDS_PSW%" -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"'
-      }
-    }
-  }
 }

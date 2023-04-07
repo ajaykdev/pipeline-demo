@@ -8,6 +8,8 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9f1234cc-74e9-457d-983a-e79480545ef5" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="8e5f23b7-422d-43fd-8d8d-ee684e82c600" file="properties/dev.yaml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="a6dd3dc3-7cbe-4716-a5cb-087acfd14fcc" file="properties/common.yaml" />
 	<flow name="pipeline-demoFlow" doc:id="2d5c7cb3-ea5d-4d9b-be1c-6e99d30cd08a" >
 		<http:listener doc:name="Listener" doc:id="ab7380be-b225-4f5f-9a5d-43f33bfde3d8" config-ref="HTTP_Listener_config" path="/pipeline"/>
 		<logger level="INFO" doc:name="Logger" doc:id="8ea92699-e7c4-40a3-a20c-4f0d2963d086" />

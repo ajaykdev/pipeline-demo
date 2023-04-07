@@ -33,17 +33,21 @@
 				<extensions>true</extensions>
 				<configuration>
 					<cloudHubDeployment>
-						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>${mule.version}</muleVersion>
-						<!-- Deploy User Parameter -->
-						<username>${anypoint.username}</username>
-						<password>${anypoint.password}</password>
-						<!-- Environment Parameter -->
-						<environment>${cloudhub.environment}</environment>
-						<applicationName>${cloudhub.app}</applicationName>
-						<businessGroup>${cloudhub.bg}</businessGroup>
-						<workerType>${cloudhub.worker}</workerType>
+						<uri>${commonDeploymentProps.url}</uri>
+						<muleVersion>${app.runtime}</muleVersion>
+						<applicationName>${project.artifactId}-${env}</applicationName>
+						<environment>${env}</environment>
+						<region>${commonDeploymentProps.region}</region>
+						<workers>${deployment.workers}</workers>
+						<workerType>${deployment.workerType}</workerType>
 						<objectStoreV2>true</objectStoreV2>
+						<connectedAppClientId>${connectedApp.clientId}</connectedAppClientId>
+						<connectedAppClientSecret>${connectedApp.clientSecret}</connectedAppClientSecret>
+						<connectedAppGrantType>${connectedApp.grantType}</connectedAppGrantType>
+						<properties>
+							<http.port>${deployment.http.listener.port}</http.port>
+							<env>${env}</env>
+						</properties>
 					</cloudHubDeployment>
 				</configuration>
 			</plugin>

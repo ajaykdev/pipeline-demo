@@ -1,0 +1,11 @@
+deployment:
+  workers: "1"
+  workerType: "MICRO"
+  http:
+    listener:
+      port: "8081"
+
+connectedApp:
+  clientId: "efef7b08ade74b0b8ebe3745334bea18"
+  clientSecret: "3e8C23625CEA407cAa6b529a08312Aa9"
+  grantType: "client_credentials"
