@@ -67,11 +67,7 @@
 			<version>1.2.3</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
-	        <dependency>
-			<groupId>org.eclipse.aether</groupId>
-			<artifactId>aether-connector-basic</artifactId>
-			<version>1.0.0.v20140518</version>
-		</dependency>
+
 
 	</dependencies>
 
