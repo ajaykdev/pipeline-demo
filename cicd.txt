@@ -1,0 +1,75 @@
+
+----------------------------pipelinescript--------------------------------
+
+pipeline {
+  agent any
+  environment {
+    ANYPOINT_USERNAME = credentials('ANYPOINT_USERNAME')
+    ANYPOINT_PASSWORD = credentials('ANYPOINT_PASSWORD')
+    DECRYPTION_KEY = credentials('DECRYPTION_KEY')
+    ANYPOINT_PLATFORM_CLIENT_ID_DEV = credentials('ANYPOINT.PLATFORM.CLIENT_ID_DEV')
+    ANYPOINT_PLATFORM_CLIENT_SECRET_DEV = credentials('ANYPOINT.PLATFORM.CLIENT_SECRET_DEV')
+  }
+  stages {
+    stage('Build Application') { 
+      steps {
+        bat 'mvn clean install'
+      }
+    }
+    
+    stage('Deploy CloudHub') { 
+      steps {
+        echo 'Deploying only because of code commit...'
+        echo 'Deploying to dev environment....'
+        bat "mvn deploy -DmuleDeploy -DskipMunitTests -Danypoint.env=dev -Danypoint.appName=customer-sapi-app-v1 -Danypoint.username=${env.ANYPOINT_USERNAME} -Danypoint.password=${env.ANYPOINT_PASSWORD} -Danypoint.muleVersion=4.4.0 -Danypoint.region=us-west-2 -Danypoint.workerType=Micro -Danypoint.workers=1 -Ddecryption.key=${env.DECRYPTION_KEY} -Danypoint.platform.client_id=${env.ANYPOINT_PLATFORM_CLIENT_ID_DEV} -Danypoint.platform.client_secret=${env.ANYPOINT_PLATFORM_CLIENT_SECRET_DEV} -Dmule.env=dev"
+      }
+    }
+  }
+}
+
+
+
+
+
+-------------------Mule Maven Plugin-------------------
+
+<plugin>
+	<groupId>org.mule.tools.maven</groupId>
+	<artifactId>mule-maven-plugin</artifactId>
+	<version>${mule.maven.plugin.version}</version>
+	<extensions>true</extensions>
+	<configuration>
+		<cloudHubDeployment>
+			<uri>https://anypoint.mulesoft.com</uri>
+			<muleVersion>${anypoint.muleVersion}</muleVersion>
+			<username>${anypoint.username}</username>
+			<password>${anypoint.password}</password>
+			<applicationName>${anypoint.appName}</applicationName>
+			<environment>${anypoint.env}</environment>
+			<region>${anypoint.region}</region>
+			<workers>${anypoint.workers}</workers>
+			<workerType>${anypoint.workerType}</workerType>
+			<objectStoreV2>true</objectStoreV2>
+			<properties>
+				<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
+				<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
+				<mule.env>${mule.env}</mule.env>
+				<secure.key>${decryption.key}</secure.key>
+			</properties>
+		</cloudHubDeployment>
+	</configuration>
+</plugin>
+
+
+
+
+
+
+----------------------------SecretText--------------------------------
+
+
+ANYPOINT_USERNAME_DEV=your anypoint usr 
+ANYPOINT_PASSWORD_DEV= anypoint pwd
+DECRYPTION_KEY= your secret key
+ANYPOINT.PLATFORM.CLIENT_ID_DEV=honrrvsyriyoryvoyrnyoryvr
+ANYPOINT.PLATFORM.CLIENT_SECRET_DEV=voshohnsdonsynosnyerey
