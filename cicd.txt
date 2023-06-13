@@ -68,8 +68,8 @@ pipeline {
 ----------------------------SecretText--------------------------------
 
 
-ANYPOINT_USERNAME_DEV=your anypoint usr 
-ANYPOINT_PASSWORD_DEV= anypoint pwd
+ANYPOINT_USERNAME=your anypoint usr 
+ANYPOINT_PASSWORD= anypoint pwd
 DECRYPTION_KEY= your secret key
-ANYPOINT.PLATFORM.CLIENT_ID_DEV=honrrvsyriyoryvoyrnyoryvr
-ANYPOINT.PLATFORM.CLIENT_SECRET_DEV=voshohnsdonsynosnyerey
+ANYPOINT.PLATFORM.CLIENT_ID_DEV= your environmet specific cid
+ANYPOINT.PLATFORM.CLIENT_SECRET_DEV= your environmet specific cs
